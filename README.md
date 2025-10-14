@@ -1,8 +1,12 @@
-# React + Vite
+# react 项目：
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 技术
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+| 方面         | 技术              | 介绍                                                                                                                    |
+| ------------ | ----------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| 路由         | React Router      | React SPA 标准使用                                                                                                      |
+| 样式         | styled components | 在 JavaScript 内部编写组件作用域 CSS 的非常流行的方式。一项值得学习的技术                                               |
+| 远程状态管理 | React Query       | 管理远程状态的最佳方式，具有缓存、自动重新获取、预获取、离线支持等功能。替代方案有 SWR 和 RTK Query，但这是最受欢迎的。 |
+| UI 状态管    | contextt API      | 这个应用几乎不需要 UI 状态，所以一个简单的 useState 上下文就足够了。不需要 Redux                                        |
+| 表单管理     | React Hook Form   | 处理大型表单可能需要大量工作，例如手动创建状态和错误处理。库可以简化所有这些工作。                                      |
+| 其他工具     |                   | React icons / React hot toast / Supabase                                                                                |
