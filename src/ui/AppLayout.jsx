@@ -9,11 +9,13 @@ const StyledAppLayout = styled.div`
   grid-template-rows: auto 1fr;
   height: 100vh;
   /* 修复滚动时整个页面一起滚动的问题，修改后：只有main模块滚动，其他模块保持不变 */
-  overflow: scroll;
+  /* overflow: scroll; */
 `;
 const Main = styled.main`
   background-color: var(--color-grey-50);
   padding: 4rem 4.8rem 6.4rem;
+  overflow-y: auto;
+  max-height: calc(100vh - var(--header-height, 6rem)); /*根据Header高度调整 */
 `;
 
 const Container = styled.div`

@@ -74,14 +74,13 @@ function CabinRow({ cabin }) {
           // 3. 将Modal.Window传给子组件的closeModal属性--子组件中接收并使用
           // 检查Modal.Window的子组件，看是否有其他本身需要传递的属性 */}
           <Modal>
-            <Menus.Toggle id={id} />
             <Menus.Menu>
+              <Menus.Toggle id={id} />
               <Menus.List id={id}>
                 <Menus.Button onClick={handleDuplicate}>复制</Menus.Button>
                 <Modal.Open openTableName="editCabin" disabled={isCreating}>
                   <Menus.Button>编辑</Menus.Button>
                 </Modal.Open>
-
                 <Modal.Open openTableName="deleteConfirm" disabled={isDeleting}>
                   <Menus.Button>删除</Menus.Button>
                 </Modal.Open>

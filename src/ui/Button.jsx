@@ -57,8 +57,8 @@ const Button = styled.button`
   //匹配属性，获取css样式
   /* ${(props) => props.sizes === "small" && sizes.small} */
 
-  ${(props) => sizes[props.sizes || "medium"]}
-  ${(props) => variations[props.variations || "primary"]}
+  ${(props) => sizes[props.$size || "medium"]}
+  ${(props) => variations[props.$variation || "primary"]}
 `;
 // 旧的方式
 // Button.defaultProps = {

@@ -9,15 +9,26 @@ function CabinTable() {
   const { isLoading, cabins, error } = useCabins();
   // const [searchParams, setSearchParams] = useSearchParams();
   const [searchParams] = useSearchParams();
+
+  // 过滤
   const filterValue = searchParams.get("filter") || "all";
+  const cabinsData = cabins || [];
   let filterCabins = [];
-  if (filterValue === "all") filterCabins = cabins;
+  if (filterValue === "all") filterCabins = cabinsData;
   if (filterValue === "no-discount")
     filterCabins = cabins?.filter((cabin) => cabin.discount === 0);
   if (filterValue === "with-discount")
     filterCabins = cabins?.filter((cabin) => cabin.discount > 0);
-  if (isLoading) return <Spinner />;
 
+  // // 排序:升序降序根据字段*-1
+  const sortBy = searchParams.get("sortBy") || "name-asc";
+  const [field, direction] = sortBy.split("-");
+  const modifier = direction === "asc" ? 1 : -1;
+  const sortCabins = filterCabins.sort(
+    (a, b) => (a[field] - b[field]) * modifier
+  );
+
+  if (isLoading) return <Spinner />;
   if (error) return;
   return (
     // 1. 将整个Table放入到Menu中
@@ -32,7 +43,7 @@ function CabinTable() {
           <div></div>
         </Table.Header>
         <Table.Body
-          data={filterCabins}
+          data={sortCabins}
           render={(item) => <CabinRow cabin={item} key={item.id} />}
         />
       </Table>

@@ -37,6 +37,7 @@ const StyledList = styled.ul`
 
   right: ${(props) => props.$position.x}px;
   top: ${(props) => props.$position.y}px;
+  z-index: 1000;
 `;
 
 const StyledButton = styled.button`
@@ -90,7 +91,7 @@ function Toggle({ id }) {
     setPosition({ x, y });
     // 如果目前没有打开窗口，或者打开的不是本窗口，就打开点击按钮对应的List窗口
     // 如果打开的已经是目前的窗口了，点击后关闭
-    rect.openId === "" || openId !== id ? open(id) : close();
+    openId === "" || openId !== id ? open(id) : close();
   }
   return (
     <StyledToggle onClick={(e) => handlerClick(e)}>
@@ -110,7 +111,7 @@ function List({ id, children }) {
   );
 }
 
-function Button({ children, onClick }) {
+function Button({ children, onClick, icon }) {
   const { close } = useContext(MenusContext);
   function handlerClick() {
     onClick?.();
@@ -118,7 +119,11 @@ function Button({ children, onClick }) {
   }
   return (
     <li>
-      <StyledButton onClick={handlerClick}>{children}</StyledButton>
+      <StyledButton onClick={handlerClick}>
+        {" "}
+        <span>{icon}</span>
+        {children}
+      </StyledButton>
     </li>
   );
 }

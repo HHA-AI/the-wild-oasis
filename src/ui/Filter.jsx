@@ -40,10 +40,14 @@ function Filter({ filterFiled, options }) {
   const [searchParams, setSearchParams] = useSearchParams();
   //给当前活跃的过滤按钮增加样式
   const currentFilter = searchParams.get(filterFiled) || options.at(0).value;
+
   function handlerClick(value) {
-    setSearchParams({ [filterFiled]: value });
+    searchParams.set([filterFiled], value);
+    if (searchParams.get("page")) searchParams.set("page", 1);
+    setSearchParams(searchParams);
+    // setSearchParams({ [filterFiled]: value });
   }
-  setSearchParams;
+
   return (
     <StyledFilter>
       {options.map((option) => (

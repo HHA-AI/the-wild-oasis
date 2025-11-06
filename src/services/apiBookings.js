@@ -1,5 +1,47 @@
+import { PAGE_SIZE } from "../utils/constants";
 import { getToday } from "../utils/helpers";
 import supabase from "./supabase";
+
+export async function getBookings({ filter, sortBy, page }) {
+  // 获取数据和count
+  let query = supabase.from("bookings").select(
+    `
+    id,
+    created_at,
+    startDate,
+    endDate,
+    numGuests,
+    cabinPrice,
+    extrasPrice,
+    totalPrice,
+    status,
+    hasBreakfast,
+    isPaid,
+    observations,
+    cabins (name),
+    guests(fullName,email)
+  `,
+    { count: "exact" }
+  );
+  // API过滤
+  if (filter) query = query.eq(filter.filterField, filter.filterValue);
+  // API排序
+  if (sortBy)
+    query = query.order(sortBy.sortField, {
+      ascending: sortBy.direction === "asc",
+    });
+  // API分页查询
+  if (page) {
+    const from = (page - 1) * PAGE_SIZE + 1;
+    const to = page * PAGE_SIZE;
+    query = query.range(from, to);
+  }
+
+  // 请求数据
+  const { data, error, count } = await query;
+  if (error) throw new Error("Bookings not found");
+  return { data, count };
+}
 
 export async function getBooking(id) {
   const { data, error } = await supabase
