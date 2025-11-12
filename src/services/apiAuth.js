@@ -30,13 +30,11 @@ export async function getCurrentUser() {
   const {
     data: { session },
   } = await supabase.auth.getSession();
-  console.log("getSession一次");
   if (!session) return null;
   const {
     data: { user },
     error,
   } = await supabase.auth.getUser();
-  console.log("getUser一次");
   if (error) throw new Error(error.message);
   return user;
 }
@@ -57,7 +55,7 @@ export async function updateUser({ fullName, password, avatar }) {
   if (!avatar) return data;
   // 3. 更新头像：头像命名+上传头像+更新头像值
   const fileName = `avator-${data.user.id}-${Math.random()}`;
-  const { error: storageError } = supabase.storage
+  const { error: storageError } = await supabase.storage
     .from("avatars")
     .upload(fileName, avatar);
   if (storageError) throw new Error(storageError.message);

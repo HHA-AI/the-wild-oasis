@@ -14,7 +14,7 @@ module.exports = {
   rules: {
     "react-refresh/only-export-components": [
       "warn",
-      { allowConstantExport: true },
+      { allowConstantExport: true, allowExportNames: ["useDarkMode"] }, // 允许特定的 Hook 名称
     ],
     "no-unused-vars": "warn",
     "react/prop-types": "off",

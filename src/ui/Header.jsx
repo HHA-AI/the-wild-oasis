@@ -10,6 +10,7 @@ const StyledHeader = styled.header`
   align-items: center;
   justify-content: end;
   gap: 2.4rem;
+  background-color: var(--color-grey-0);
 `;
 
 function Header() {

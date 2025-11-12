@@ -15,6 +15,7 @@ import { Toaster } from "react-hot-toast";
 import Booking from "./pages/Booking";
 import CheckIn from "./pages/CheckIn";
 import ProtectedRoute from "./ui/ProtectedRoute";
+import { DarkModeProvider } from "./context/DarkModeContext";
 
 // react-query使用：
 // 1. 创建一个查询和缓存的客户端new QueryClient
@@ -32,56 +33,58 @@ window.__TANSTACK_QUERY_CLIENT__ = queryClient;
 
 function App() {
   return (
-    // react-query使用： 2 将数据提供给app
-    <QueryClientProvider client={queryClient}>
-      {/* react-query使用： 3 reactquery开发工具 */}
-      <ReactQueryDevtools initialIsOpen={false} />
-      {/* 3. 全局样式 */}
-      <GlobalStyle />
-      <BrowserRouter>
-        <Routes>
-          {/* 4.设置页面布局AppLayout */}
-          <Route
-            element={
-              <ProtectedRoute>
-                <AppLayout />
-              </ProtectedRoute>
-            }
-          >
-            {/* 2. 配置index页面路由 */}
-            {/* <Route index repalce redirect={"/dashboard"} />   错误代码：redirect只能在action中用*/}
-            <Route index element={<Navigate replace to="dashboard" />} />
-            {/* 1. 配置每个页面和对应路由 */}
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/bookings" element={<Bookings />} />
-            <Route path="/bookings/:bookingId" element={<Booking />} />
-            <Route path="/checkin/:bookingId" element={<CheckIn />} />
-            <Route path="/cabins" element={<Cabins />} />
-            <Route path="/users" element={<Users />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/account" element={<Account />} />
-          </Route>
-          <Route path="/login" element={<Login />} />
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
-      </BrowserRouter>
-      <Toaster
-        position="top-center"
-        gutter={12}
-        containerStyle={{ margin: "8px" }}
-        toastOptions={{
-          success: { duration: 3000 },
-          error: { duration: 5000 },
-          style: {
-            fontSize: "16px",
-            maxWidth: "500px",
-            padding: "16px 24px",
-            backgroundColor: "var(--color-grey-0)",
-            color: "var(--color-grey-700)",
-          },
-        }}
-      />
-    </QueryClientProvider>
+    <DarkModeProvider>
+      {/* react-query使用： 2 将数据提供给app */}
+      <QueryClientProvider client={queryClient}>
+        {/* react-query使用： 3 reactquery开发工具 */}
+        <ReactQueryDevtools initialIsOpen={false} />
+        {/* 3. 全局样式 */}
+        <GlobalStyle />
+        <BrowserRouter>
+          <Routes>
+            {/* 4.设置页面布局AppLayout */}
+            <Route
+              element={
+                <ProtectedRoute>
+                  <AppLayout />
+                </ProtectedRoute>
+              }
+            >
+              {/* 2. 配置index页面路由 */}
+              {/* <Route index repalce redirect={"/dashboard"} />   错误代码：redirect只能在action中用*/}
+              <Route index element={<Navigate replace to="dashboard" />} />
+              {/* 1. 配置每个页面和对应路由 */}
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/bookings" element={<Bookings />} />
+              <Route path="/bookings/:bookingId" element={<Booking />} />
+              <Route path="/checkin/:bookingId" element={<CheckIn />} />
+              <Route path="/cabins" element={<Cabins />} />
+              <Route path="/users" element={<Users />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="/account" element={<Account />} />
+            </Route>
+            <Route path="/login" element={<Login />} />
+            <Route path="*" element={<PageNotFound />} />
+          </Routes>
+        </BrowserRouter>
+        <Toaster
+          position="top-center"
+          gutter={12}
+          containerStyle={{ margin: "8px" }}
+          toastOptions={{
+            success: { duration: 3000 },
+            error: { duration: 5000 },
+            style: {
+              fontSize: "16px",
+              maxWidth: "500px",
+              padding: "16px 24px",
+              backgroundColor: "var(--color-grey-0)",
+              color: "var(--color-grey-700)",
+            },
+          }}
+        />
+      </QueryClientProvider>
+    </DarkModeProvider>
   );
 }
 
