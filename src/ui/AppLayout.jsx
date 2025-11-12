@@ -14,8 +14,7 @@ const StyledAppLayout = styled.div`
 const Main = styled.main`
   background-color: var(--color-grey-50);
   padding: 4rem 4.8rem 6.4rem;
-  overflow-y: auto;
-  max-height: calc(100vh - var(--header-height, 6rem)); /*根据Header高度调整 */
+  overflow: scroll;
 `;
 
 const Container = styled.div`
@@ -30,15 +29,13 @@ function AppLayout() {
   return (
     <StyledAppLayout>
       <Sidebar />
-      <div>
-        <Header />
-        <Main>
-          <Container>
-            {/* 子路由中返回<></>Fragment ,而不是div，因为div在main下可能会影响期望设置样式 */}
-            <Outlet />
-          </Container>
-        </Main>
-      </div>
+      <Header />
+      <Main>
+        <Container>
+          {/* 子路由中返回<></>Fragment ,而不是div，因为div在main下可能会影响期望设置样式 */}
+          <Outlet />
+        </Container>
+      </Main>
     </StyledAppLayout>
   );
 }

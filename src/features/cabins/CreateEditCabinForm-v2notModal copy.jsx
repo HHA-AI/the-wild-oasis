@@ -78,7 +78,7 @@ function CreateEditCabinForm({ cabinToEdit = {} }) {
   return (
     <>
       <Form onSubmit={handleSubmit(onSubmit, onError)}>
-        <FormROw error={errors?.name?.message} labelName="Cabin name">
+        <FormROw error={errors?.name?.message} label="Cabin name">
           <Input
             type="text"
             id="name"
@@ -86,10 +86,7 @@ function CreateEditCabinForm({ cabinToEdit = {} }) {
             {...register("name", { required: "This field is required" })}
           />
         </FormROw>
-        <FormROw
-          error={errors?.maxCapacity?.message}
-          labelName="Maximum capacity"
-        >
+        <FormROw error={errors?.maxCapacity?.message} label="Maximum capacity">
           <Input
             type="number"
             id="maxCapacity"
@@ -101,10 +98,7 @@ function CreateEditCabinForm({ cabinToEdit = {} }) {
           />
         </FormROw>
 
-        <FormROw
-          error={errors?.regularPrice?.message}
-          labelName="Regular price"
-        >
+        <FormROw error={errors?.regularPrice?.message} label="Regular price">
           <Input
             type="number"
             id="regularPrice"
@@ -116,7 +110,7 @@ function CreateEditCabinForm({ cabinToEdit = {} }) {
           />
         </FormROw>
 
-        <FormROw error={errors?.discount?.message} labelName="Discount">
+        <FormROw error={errors?.discount?.message} label="Discount">
           <Input
             type="number"
             id="discount"
@@ -133,7 +127,7 @@ function CreateEditCabinForm({ cabinToEdit = {} }) {
 
         <FormROw
           error={errors?.description?.message}
-          labelName="Description for website"
+          label="Description for website"
         >
           <Textarea
             type="number"
@@ -143,7 +137,7 @@ function CreateEditCabinForm({ cabinToEdit = {} }) {
           />
         </FormROw>
 
-        <FormROw error={errors?.image?.message} labelName="Cabin photo">
+        <FormROw error={errors?.image?.message} label="Cabin photo">
           {/* 将文件上传到supabase：
         1. type=file  应该本身包含在FileIput组件内部，封装成上传file的input组件
         2. register*/}

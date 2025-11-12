@@ -5,7 +5,7 @@ import Dashboard from "./pages/Dashboard";
 import Account from "./pages/Account";
 import Bookings from "./pages/Bookings";
 import Cabins from "./pages/Cabins";
-import Login from "./pages/Dashboard";
+import Login from "./pages/Login";
 import PageNotFound from "./pages/PageNotFound";
 import Settings from "./pages/Settings";
 import Users from "./pages/Users";
@@ -14,6 +14,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
 import Booking from "./pages/Booking";
 import CheckIn from "./pages/CheckIn";
+import ProtectedRoute from "./ui/ProtectedRoute";
 
 // react-query使用：
 // 1. 创建一个查询和缓存的客户端new QueryClient
@@ -40,7 +41,13 @@ function App() {
       <BrowserRouter>
         <Routes>
           {/* 4.设置页面布局AppLayout */}
-          <Route element={<AppLayout />}>
+          <Route
+            element={
+              <ProtectedRoute>
+                <AppLayout />
+              </ProtectedRoute>
+            }
+          >
             {/* 2. 配置index页面路由 */}
             {/* <Route index repalce redirect={"/dashboard"} />   错误代码：redirect只能在action中用*/}
             <Route index element={<Navigate replace to="dashboard" />} />
@@ -54,7 +61,7 @@ function App() {
             <Route path="/settings" element={<Settings />} />
             <Route path="/account" element={<Account />} />
           </Route>
-          <Route path="/Login" element={<Login />} />
+          <Route path="/login" element={<Login />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>

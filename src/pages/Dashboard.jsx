@@ -3,7 +3,7 @@ import Heading from "../ui/Heading";
 import Row from "../ui/Row";
 import { getBookings } from "../services/apiBookings";
 import { getCabins } from "../services/apiCabins";
-import { getSettings } from "../services/apiSettings";
+// import { getSettings } from "../services/apiSettings";
 
 function Dashboard() {
   // 预获取bookings、cabins、settings
@@ -18,10 +18,10 @@ function Dashboard() {
     queryFn: () => getBookings({ page: 1 }),
   });
   queryClient.prefetchQuery({ queryKey: ["cabins"], queryFn: getCabins });
-  queryClient.prefetchQuery({
-    queryKey: ["settings"],
-    queryFn: getSettings,
-  });
+  // queryClient.prefetchQuery({
+  //   queryKey: ["settings"],
+  //   queryFn: getSettings,
+  // });
   return (
     <Row type="horizontal">
       <Heading as="h1">Dashboard</Heading>

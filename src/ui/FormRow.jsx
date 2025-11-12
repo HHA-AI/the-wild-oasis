@@ -5,7 +5,6 @@ const StyledFormRow = styled.div`
   align-items: center;
   grid-template-columns: 24rem 1fr 1.2fr;
   gap: 2.4rem;
-
   padding: 1.2rem 0;
 
   &:first-child {
@@ -36,11 +35,11 @@ const Error = styled.span`
   color: var(--color-red-700);
 `;
 
-function FormRow({ children, error, labelName }) {
+function FormRow({ children, error, label }) {
   return (
     <StyledFormRow>
       {/* 获取children的某个属性值：children.props.id */}
-      <Label htmlFor={children.props.id}>{labelName}</Label>
+      {label && <Label htmlFor={children.props.id}>{label}</Label>}
       {children}
       {error && <Error>{error}</Error>}
     </StyledFormRow>
