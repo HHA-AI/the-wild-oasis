@@ -1,7 +1,7 @@
 import Logo from "./Logo";
 import styled from "styled-components";
 import MainNav from "./MainNav";
-import Uploader from "../data/Uploader";
+// import Uploader from "../data/Uploader";
 
 const StyledSidebar = styled.aside`
   background-color: var(--color-grey-0);
@@ -19,7 +19,7 @@ function Sidebar() {
       <Logo />
       {/* 常规设置导航的模式 */}
       <MainNav />
-      <Uploader />
+      {/* <Uploader /> */}
     </StyledSidebar>
   );
 }
