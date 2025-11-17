@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { HiEllipsisVertical } from "react-icons/hi2";
 import styled from "styled-components";
@@ -29,7 +29,7 @@ const StyledToggle = styled.button`
 `;
 
 const StyledList = styled.ul`
-  position: fixed;
+  position: absolute;
 
   background-color: var(--color-grey-0);
   box-shadow: var(--shadow-md);
@@ -86,15 +86,19 @@ function Toggle({ id }) {
   function handlerClick(e) {
     // positon 1)获取点击的button的位置
     const rect = e.target.closest("button").getBoundingClientRect();
-    const x = window.innerWidth - rect.width - rect.x;
-    const y = rect.y + rect.height + 8;
+    // 计算相对于文档的位置，而不是视口
+    const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
+    const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+
+    const x = window.innerWidth - rect.left - scrollX;
+    const y = rect.top + rect.height + scrollY + 8;
     setPosition({ x, y });
     // 如果目前没有打开窗口，或者打开的不是本窗口，就打开点击按钮对应的List窗口
     // 如果打开的已经是目前的窗口了，点击后关闭
     openId === "" || openId !== id ? open(id) : close();
   }
   return (
-    <StyledToggle onClick={(e) => handlerClick(e)}>
+    <StyledToggle onClick={(e) => handlerClick(e)} data-menu-id={id}>
       <HiEllipsisVertical />
     </StyledToggle>
   );
@@ -103,10 +107,31 @@ function Toggle({ id }) {
 function List({ id, children }) {
   // 如果openId===id显示List
   const { openId, position } = useContext(MenusContext);
+  const [currentPosition, setCurrentPosition] = useState(position);
+  useEffect(() => {
+    if (openId !== id) return;
+    const updatePosition = () => {
+      const toggleButton = document.querySelector(`[data-menu-id='${id}']`);
+      if (!toggleButton) return;
+
+      const rect = toggleButton.getBoundingClientRect();
+      const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
+      const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+
+      const x = window.innerWidth - rect.left - scrollX;
+      const y = rect.top + rect.height + scrollY + 8;
+
+      setCurrentPosition({ x, y });
+    };
+    updatePosition();
+
+    window.addEventListener("scroll", updatePosition, true);
+    window.addEventListener("resize", updatePosition);
+  }, [openId, id, position]);
 
   if (openId !== id) return null;
   return createPortal(
-    <StyledList $position={position}>{children}</StyledList>,
+    <StyledList $position={currentPosition}>{children}</StyledList>,
     document.body
   );
 }

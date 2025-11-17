@@ -40,7 +40,12 @@ function App() {
         <ReactQueryDevtools initialIsOpen={false} />
         {/* 3. 全局样式 */}
         <GlobalStyle />
-        <BrowserRouter>
+        <BrowserRouter
+          future={{
+            v7_startTransition: true,
+            v7_relativeSplatPath: true,
+          }}
+        >
           <Routes>
             {/* 4.设置页面布局AppLayout */}
             <Route
