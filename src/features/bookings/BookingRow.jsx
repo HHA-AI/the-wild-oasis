@@ -9,11 +9,7 @@ import { formatDistanceFromNow } from "../../utils/helpers";
 import { HiEye, HiTrash } from "react-icons/hi";
 import Menus from "../../ui/Menus";
 import { useNavigate } from "react-router-dom";
-import {
-  HiArrowDownOnSquare,
-  HiArrowUpOnSquare,
-  HiMiniXCircle,
-} from "react-icons/hi2";
+import { HiArrowDownOnSquare, HiArrowUpOnSquare } from "react-icons/hi2";
 import { useCheckout } from "../check-in-out/useCheckout";
 import { useDeleteBooking } from "./useDeleteBooking";
 import Modal from "../../ui/Modal";
