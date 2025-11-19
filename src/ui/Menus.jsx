@@ -29,7 +29,7 @@ const StyledToggle = styled.button`
 `;
 
 const StyledList = styled.ul`
-  position: absolute;
+  position: fixed;
 
   background-color: var(--color-grey-0);
   box-shadow: var(--shadow-md);
@@ -84,17 +84,16 @@ function Toggle({ id }) {
   const { openId, close, open, setPosition } = useContext(MenusContext);
 
   function handlerClick(e) {
-    // positon 1)获取点击的button的位置
-    const rect = e.target.closest("button").getBoundingClientRect();
-    // 计算相对于文档的位置，而不是视口
-    const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
-    const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+    e.stopPropagation(); // 阻止事件冒泡
 
-    const x = window.innerWidth - rect.left - scrollX;
-    const y = rect.top + rect.height + scrollY + 8;
-    setPosition({ x, y });
-    // 如果目前没有打开窗口，或者打开的不是本窗口，就打开点击按钮对应的List窗口
-    // 如果打开的已经是目前的窗口了，点击后关闭
+    const rect = e.target.closest("button").getBoundingClientRect();
+
+    // 直接使用视口坐标（fixed定位）
+    // 直接使用视口坐标（fixed定位）
+    setPosition({
+      x: window.innerWidth - rect.width - rect.x,
+      y: rect.y + rect.height + 8,
+    });
     openId === "" || openId !== id ? open(id) : close();
   }
   return (
@@ -115,13 +114,10 @@ function List({ id, children }) {
       if (!toggleButton) return;
 
       const rect = toggleButton.getBoundingClientRect();
-      const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
-      const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-
-      const x = window.innerWidth - rect.left - scrollX;
-      const y = rect.top + rect.height + scrollY + 8;
-
-      setCurrentPosition({ x, y });
+      setCurrentPosition({
+        x: window.innerWidth - rect.width - rect.x,
+        y: rect.y + rect.height + 8,
+      });
     };
     updatePosition();
 
